@@ -71,6 +71,7 @@
 .milestone:hover { border-color: #d8c8fb; }
 .milestone-complete { background: #faf7ff; }
 
+.references-notes { margin-bottom: 16px; }
 .reference-card { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: start; gap: 11px; padding: 11px; border: 1px solid #eae6f2; border-radius: 9px; }
 .reference-card:hover { border-color: #d3c5f9; box-shadow: 0 2px 7px #5737ba10; background: #fbf9ff; }
 .reference-icon, .quiz-icon { display: grid; place-items: center; border-radius: 8px; color: var(--tone-ink); background: var(--tone-fill); }

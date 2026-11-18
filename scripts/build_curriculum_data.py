@@ -7,8 +7,6 @@ from pathlib import Path
 
 from openpyxl import load_workbook
 
-from starter_content import STARTERS
-
 ROOT = Path(__file__).resolve().parents[1]
 MODULE_IDS = [f"M{i:02}" for i in range(1, 17)]
 SECTION_IDS = (
@@ -66,40 +64,31 @@ def read_tracker(path):
         workbook.close()
 
 
-def read_seed_sections(module_id):
+def read_lesson_sections(module_id):
     path = ROOT / "scripts" / "lessons" / f"{module_id.lower()}.md"
-    source = path.read_text(encoding="utf-8")
-    headings = list(re.finditer(r"^## ([1-8])\. .+$", source, re.MULTILINE))
-    if [int(match[1]) for match in headings] != list(range(1, 9)):
+    lines = path.read_text(encoding="utf-8").splitlines()
+    headings = []
+    fence = None
+    for index, line in enumerate(lines):
+        marker = re.match(r"^ {0,3}(`{3,}|~{3,})(.*)$", line)
+        if fence:
+            if marker and marker[1].startswith(fence) and not marker[2].strip():
+                fence = None
+            continue
+        if marker:
+            fence = marker[1]
+            continue
+        heading = re.fullmatch(r"## ([1-8])\. .+", line)
+        if heading:
+            headings.append((int(heading[1]), index))
+    if [number for number, _ in headings] != list(range(1, 9)):
         raise ValueError(f"{path.name} needs the eight numbered template sections in order.")
     sections = {}
-    for index, (key, heading) in enumerate(zip(SECTION_IDS, headings)):
-        end = headings[index + 1].start() if index + 1 < len(headings) else len(source)
-        sections[key] = source[heading.end():end].strip()
+    boundaries = [line for _, line in headings] + [len(lines)]
+    for key, start, end in zip(SECTION_IDS, boundaries[:-1], boundaries[1:], strict=True):
+        sections[key] = "\n".join(lines[start + 1:end]).strip()
         if not sections[key]:
             raise ValueError(f"{path.name} is missing content for {key}.")
-    return sections
-
-
-def get_starter_sections(module_id):
-    starter = STARTERS[module_id]
-    sections = dict.fromkeys(SECTION_IDS, "")
-    sections["projects"] = "\n\n".join(
-        f"### Project {index}: {title}\n\n"
-        f"**Domain:** {domain}\n\n{problem}\n\n"
-        f"#### Build Milestones\n\n1. {plan}\n2. {verify}"
-        for index, (title, domain, problem, plan, verify) in enumerate(starter["projects"], 1)
-    )
-    sections["quiz"] = "\n\n".join(
-        f"### Q{index}. {prompt}\n\n"
-        + "\n".join(f"- {letter}. {option}" for letter, option in zip("ABC", options))
-        + f"\n\n<details>\n<summary>Answer & Explanation</summary>\n\n"
-        + f"**Answer: {answer}.** {explanation}\n\n</details>"
-        for index, (prompt, options, answer, explanation) in enumerate(starter["quiz"], 1)
-    )
-    sections["references"] = "\n".join(
-        f"- [{title}]({url}) — {note}" for title, url, note in starter["references"]
-    )
     return sections
 
 
@@ -114,13 +103,17 @@ def main():
     parser.add_argument("--output", type=Path, default=ROOT / "src" / "data")
     options = parser.parse_args()
     curriculum = read_tracker(options.workbook)
+    lessons = {module["id"]: read_lesson_sections(module["id"]) for module in curriculum["modules"]}
+    practice = {}
     for module in curriculum["modules"]:
         module_id = module["id"]
-        full_lesson = module_id in MODULE_IDS[:3]
-        sections = read_seed_sections(module_id) if full_lesson else get_starter_sections(module_id)
+        sections = lessons[module_id]
+        # Keep the dashboard's synchronous progress lookup independent of the full reading bundle.
+        practice[module_id] = {key: sections[key] for key in ("projects", "quiz")}
         write_json(options.output / "modules" / f"{module_id.lower()}.json", {
-            "metadata": module, "fullLesson": full_lesson, "sections": sections,
+            "metadata": module, "sections": sections,
         })
+    write_json(options.output / "practice.json", practice)
     write_json(options.output / "curriculum.json", curriculum)
     print(f"Generated {len(curriculum['modules'])} modules ({curriculum['targetHours']:.1f} target hours).")
 

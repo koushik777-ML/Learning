@@ -16,8 +16,8 @@ This is a client-side React, TypeScript, Vite, and Tailwind app. Use the existin
 
 - Keep workbook metadata in `AI_Systems_Curriculum_Tracker.xlsx`.
 - Follow the heading order and project rules in `curriculum_prompt.md`.
-- Edit the first three seed lessons under `scripts/lessons/` and later starter
-  content in `scripts/starter_content.py`. Regenerate and commit `src/data/` afterward.
+- Edit all 16 lessons under `scripts/lessons/`. Regenerate and commit `src/data/` afterward.
+- Keep existing project milestone and quiz wording stable where possible to preserve saved progress.
 - Keep project blueprints in plain English. Runnable examples belong in Syntax or the Reference Lab.
 - Preserve compatibility with existing `ai_curriculum_progress_v1` backups. Keep storage,
   quiz grading, imports, and exports client-side.

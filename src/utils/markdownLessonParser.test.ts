@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { curriculum, getLesson } from '../data/curriculum'
+import { curriculum, getPractice, loadLesson } from '../data/curriculum'
 import { sections } from '../types/curriculum'
 import { makeLesson, parseLessonMarkdown } from './markdownLessonParser'
 
@@ -19,26 +19,30 @@ describe('generated curriculum', () => {
       .toEqual([6, 3, 7])
   })
 
-  it.each(curriculum.modules)('$id has three checklists, gradeable questions, and references', ({ id }) => {
-    const lesson = getLesson(id)
-    const rich = ['M01', 'M02', 'M03'].includes(id)
-    expect(lesson.fullLesson).toBe(rich)
-    expect(lesson.projects.map(({ number }) => number)).toEqual([1, 2, 3])
-    expect(lesson.projects.every(({ milestones }) => milestones.length > 0)).toBe(true)
-    expect(lesson.questions).toHaveLength(rich ? 6 : 2)
-    expect(new Set(lesson.questions.map(({ id: key }) => key)).size).toBe(lesson.questions.length)
-    expect(lesson.questions.filter(({ correctChoice }) => correctChoice !== null)).toHaveLength(rich ? 5 : 2)
-    expect(lesson.questions.every(({ explanation }) => Boolean(explanation))).toBe(true)
-    if (rich) expect(lesson.questions.at(-1)?.options).toEqual([])
-    expect(lesson.references).toHaveLength(rich ? 5 : 3)
-    if (rich) {
-      expect(lesson.debugCases.length).toBeGreaterThanOrEqual(4)
-      expect(lesson.debugCases.every(({ symptom, cause, diagnostic, fix }) => symptom && cause && diagnostic && fix)).toBe(true)
+  it.each(curriculum.modules)('$id has eight lesson sections and complete interactive practice', async ({ id }) => {
+    const lesson = await loadLesson(id)
+    for (const { id: section } of sections) expect(lesson.sections[section].trim()).not.toBe('')
+    for (const section of ['mental-model', 'architecture', 'syntax', 'lab'] as const) {
+      const prose = lesson.sections[section].replace(/```[\s\S]*?```/g, '')
+      expect(prose.trim().split(/\s+/).length, section).toBeGreaterThanOrEqual(180)
     }
+
+    expect(lesson.projects.map(({ number }) => number)).toEqual([1, 2, 3])
+    expect(lesson.projects.every(({ milestones, overview, acceptance }) =>
+      milestones.length >= 2 && Boolean(overview) && Boolean(acceptance))).toBe(true)
+    expect(lesson.questions.length).toBeGreaterThanOrEqual(6)
+    expect(new Set(lesson.questions.map(({ id: key }) => key)).size).toBe(lesson.questions.length)
+    expect(lesson.questions.some(({ correctChoice }) => correctChoice !== null)).toBe(true)
+    expect(lesson.questions.some(({ options }) => options.length === 0)).toBe(true)
+    expect(lesson.questions.every(({ explanation }) => Boolean(explanation))).toBe(true)
+    expect(lesson.references.length).toBeGreaterThanOrEqual(5)
+    expect(lesson.debugCases.length).toBeGreaterThanOrEqual(4)
+    expect(lesson.debugCases.every(({ symptom, cause, diagnostic, fix }) => symptom && cause && diagnostic && fix)).toBe(true)
+    expect(getPractice(id)).toEqual({ projects: lesson.projects, questions: lesson.questions })
   })
 })
 
-describe('lesson import', () => {
+describe('lesson Markdown', () => {
   it('accepts a Markdown fence and CRLF and ignores section-shaped headings in embedded code', () => {
     const architecture = `${fence}text\n## 8. This belongs in the diagram\n${fence}`
     const markdown = `${fence}markdown\n${lessonMarkdown({ architecture })}\n${fence}`.replace(/\n/g, '\r\n')
@@ -63,8 +67,8 @@ describe('lesson import', () => {
       '### Question 2: Explain the result.', '<details>', '<summary>Answer & Explanation</summary>',
       'The edge should reject invalid inputs.', '</details>',
     ].join('\n')
-    const references = '- [Python docs](https://docs.python.org/3/) — Start with the library reference.\n- [Invalid](javascript:alert(1))'
-    const imported = makeLesson(parseLessonMarkdown(lessonMarkdown({ projects, quiz, references })), true, true)
+    const references = 'Review the main concepts here.\n\n- [Python docs](https://docs.python.org/3/) — Start with the library reference.\n- [Invalid](javascript:alert(1))'
+    const imported = makeLesson(parseLessonMarkdown(lessonMarkdown({ projects, quiz, references })))
     expect(imported.projects[0]).toMatchObject({ title: 'Project title', domain: 'Test domain', overview: 'A clear problem.' })
     expect(imported.projects[0].milestones.map(({ text }) => text)).toEqual(['Design the boundary.', 'Verify the result.'])
     expect(imported.questions[0]).toMatchObject({
@@ -73,6 +77,7 @@ describe('lesson import', () => {
       explanation: 'Check the edge.',
     })
     expect(imported.questions[1]).toMatchObject({ correctChoice: null, options: [], explanation: 'The edge should reject invalid inputs.' })
+    expect(imported.referenceNotes).toContain('Review the main concepts here.')
     expect(imported.references).toEqual([{ title: 'Python docs', url: 'https://docs.python.org/3/', note: 'Start with the library reference.' }])
   })
 })

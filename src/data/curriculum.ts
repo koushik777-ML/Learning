@@ -1,23 +1,33 @@
 import roadmap from './curriculum.json'
-import type { Curriculum, Lesson, ModuleId, ModuleSeed } from '../types/curriculum'
-import { makeLesson, parseLessonMarkdown } from '../utils/markdownLessonParser'
+import practiceMarkdown from './practice.json'
+import type { Curriculum, Lesson, ModuleId, ModuleData } from '../types/curriculum'
+import { parseProjects, parseQuestions } from '../utils/lessonContent'
+import { makeLesson } from '../utils/markdownLessonParser'
 
 export const curriculum = roadmap as Curriculum
 export const modulesById = Object.fromEntries(curriculum.modules.map((module) => [module.id, module])) as
   Record<ModuleId, Curriculum['modules'][number]>
 
-const seeds = import.meta.glob<ModuleSeed>('./modules/*.json', { eager: true, import: 'default' })
-const lessonCache = new Map<ModuleId, { markdown: string | null; lesson: Lesson }>()
+type Practice = Pick<Lesson, 'projects' | 'questions'>
+const practiceCache = new Map<ModuleId, Practice>()
 
-export function getLesson(id: ModuleId, markdown: string | null = null): Lesson {
+export function getPractice(id: ModuleId): Practice {
+  const cached = practiceCache.get(id)
+  if (cached) return cached
+  const { projects, quiz } = practiceMarkdown[id]
+  const practice = { projects: parseProjects(projects), questions: parseQuestions(quiz) }
+  practiceCache.set(id, practice)
+  return practice
+}
+
+const loadModules = import.meta.glob<ModuleData>('./modules/*.json', { import: 'default' })
+const lessonCache = new Map<ModuleId, Promise<Lesson>>()
+
+export function loadLesson(id: ModuleId): Promise<Lesson> {
   const cached = lessonCache.get(id)
-  if (cached && cached.markdown === markdown) return cached.lesson
-
-  const seed = seeds[`./modules/${id.toLowerCase()}.json`]
-  const lesson = markdown
-    ? makeLesson(parseLessonMarkdown(markdown), true, true)
-    : makeLesson(seed.sections, seed.fullLesson)
-  lessonCache.set(id, { markdown, lesson })
+  if (cached) return cached
+  const lesson = loadModules[`./modules/${id.toLowerCase()}.json`]().then(({ sections }) => makeLesson(sections))
+  lessonCache.set(id, lesson)
   return lesson
 }
 

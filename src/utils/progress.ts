@@ -1,4 +1,4 @@
-import { curriculum, getLesson } from '../data/curriculum'
+import { curriculum, getPractice } from '../data/curriculum'
 import type { ModuleId, ModuleProgress, ModuleStatus, Progress, Project, Question, TimerState } from '../types/curriculum'
 
 export const storageKey = 'ai_curriculum_progress_v1'
@@ -68,7 +68,7 @@ export function quizSummary(questions: Question[], value: ModuleProgress) {
 export function summarize(progress: Progress) {
   const rows = curriculum.modules.map((module) => {
     const value = getModuleProgress(progress, module.id)
-    const lesson = getLesson(module.id, value.lessonMarkdown)
+    const lesson = getPractice(module.id)
     return {
       module,
       value,

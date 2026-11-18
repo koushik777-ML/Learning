@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { getLesson } from '../data/curriculum'
+import { getPractice } from '../data/curriculum'
+import { sections } from '../types/curriculum'
 import type { ModuleProgress, Progress } from '../types/curriculum'
 import {
   changeModule, checkpointStatus, createProgress, elapsedTime, emptyModule, getModuleProgress,
@@ -8,7 +9,7 @@ import {
 import { decodeProgress, summaryCsv } from './progressBackup'
 
 describe('workbook calculations', () => {
-  const { projects, questions } = getLesson('M01')
+  const { projects, questions } = getPractice('M01')
 
   it('counts each checked-off project and the lesson/lab as independent 25% checkpoints', () => {
     const module: ModuleProgress = {
@@ -53,8 +54,11 @@ describe('progress portability', () => {
   })
 
   it('round-trips a version 1 backup and rejects invalid input', () => {
+    const legacyLesson = sections.map(({ title }, i) => `## ${i + 1}. ${title}\nSaved content.`).join('\n\n')
     const progress: Progress = {
-      ...changeModule(createProgress(), 'M07', (module) => ({ ...module, notes: '**Remember** volumes', actualHours: 3 })),
+      ...changeModule(createProgress(), 'M07', (module) => ({
+        ...module, notes: '**Remember** volumes', actualHours: 3, lessonMarkdown: legacyLesson,
+      })),
       lastVisited: { moduleId: 'M07', section: 'projects' },
       timer: { moduleId: 'M07', elapsedMs: 500, startedAt: null },
     }

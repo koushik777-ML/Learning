@@ -41,10 +41,9 @@ export interface Curriculum {
   targetHours: number
 }
 
-export interface ModuleSeed {
+export interface ModuleData {
   metadata: ModuleMetadata
   sections: LessonSections
-  fullLesson: boolean
 }
 
 export interface Project {
@@ -83,11 +82,10 @@ export interface DebugCase {
 
 export interface Lesson {
   sections: LessonSections
-  fullLesson: boolean
-  imported: boolean
   projects: Project[]
   questions: Question[]
   references: Reference[]
+  referenceNotes: string
   debugCases: DebugCase[]
 }
 
@@ -117,6 +115,7 @@ export interface ModuleProgress {
   flagged: string[]
   notes: string
   repositoryUrl: string
+  // Retained in version 1 backups for previously saved custom lessons.
   lessonMarkdown: string | null
 }
 

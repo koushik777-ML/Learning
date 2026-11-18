@@ -102,13 +102,17 @@ export function parseQuestions(markdown: string): Question[] {
   })
 }
 
-export function parseReferences(markdown: string): Reference[] {
-  return visibleLines(markdown).flatMap(({ line }) => {
-    const link = /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)(.*)/i.exec(line)
+export function parseReferenceSection(markdown: string) {
+  const remaining = markdown.split('\n')
+  const references: Reference[] = []
+  for (const { line, index } of visibleLines(markdown)) {
+    const link = /^\s*(?:(?:[-*+]|\d+\.)\s+)?\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)(.*)$/i.exec(line)
     const url = link && safeWebUrl(link[2])
-    if (!link || !url) return []
-    return [{ title: link[1], url: url.href, note: link[3].trim().replace(/^\*\*|^[:—–.-]+\s*/, '').trim() }]
-  })
+    if (!link || !url) continue
+    remaining[index] = ''
+    references.push({ title: link[1], url: url.href, note: link[3].trim().replace(/^\*\*|^[:—–.-]+\s*/, '').trim() })
+  }
+  return { references, referenceNotes: remaining.join('\n').trim() }
 }
 
 export function parseDebugCases(markdown: string): DebugCase[] {

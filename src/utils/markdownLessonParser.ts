@@ -1,7 +1,7 @@
 import { sections } from '../types/curriculum'
 import type { Lesson, LessonSections } from '../types/curriculum'
 import { readHeadings, splitAtHeadings } from './markdownBlocks'
-import { parseDebugCases, parseProjects, parseQuestions, parseReferences } from './lessonContent'
+import { parseDebugCases, parseProjects, parseQuestions, parseReferenceSection } from './lessonContent'
 
 const sectionTitles = [
   /mental model/i,
@@ -45,14 +45,12 @@ export function parseLessonMarkdown(markdown: string): LessonSections {
   return Object.fromEntries(sections.map(({ id }, index) => [id, blocks[index].body])) as LessonSections
 }
 
-export function makeLesson(content: LessonSections, fullLesson: boolean, imported = false): Lesson {
+export function makeLesson(content: LessonSections): Lesson {
   return {
     sections: content,
-    fullLesson,
-    imported,
     projects: parseProjects(content.projects),
     questions: parseQuestions(content.quiz),
-    references: parseReferences(content.references),
+    ...parseReferenceSection(content.references),
     debugCases: parseDebugCases(content.debugging),
   }
 }
