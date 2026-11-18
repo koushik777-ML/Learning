@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "id": "M07",
+    "phaseId": "phase-2",
+    "title": "Docker & Containerization",
+    "topics": "Linux namespaces & cgroups, image layers & caching, non-root security hardening, multi-stage Python Dockerfiles, volumes, bridge networking, docker-compose",
+    "model": "GPT-6.2 Sol (Medium)",
+    "targetHours": 8
+  },
+  "fullLesson": false,
+  "sections": {
+    "mental-model": "",
+    "architecture": "",
+    "syntax": "",
+    "lab": "",
+    "debugging": "",
+    "projects": "### Project 1: Print Layout Worker Image\n\n**Domain:** Commercial printing\n\nProvide a reproducible worker image with a small runtime.\n\n#### Build Milestones\n\n1. Separate build and runtime dependencies and arrange layers for predictable cache reuse.\n2. Compare build times and confirm the runtime runs as a non-root user.\n\n### Project 2: Field Sensor Replay Environment\n\n**Domain:** Environmental monitoring\n\nReplay sensor files in a self-contained environment.\n\n#### Build Milestones\n\n1. Design network boundaries and choose bind mounts for input and volumes for retained outputs.\n2. Remove and recreate the container and verify the documented output lifecycle.\n\n### Project 3: Library Digitization Stack\n\n**Domain:** Archives\n\nRun a digitization API and background processor together.\n\n#### Build Milestones\n\n1. Define service dependencies, health checks, persistent data, and resource limits.\n2. Simulate a slow dependency and verify bounded startup and clean recovery.",
+    "quiz": "### Q1. Installing dependencies reruns every time application source changes. What usually improves layer reuse?\n\n- A. Copy dependency manifests and install before copying application sources\n- B. Run every build without the cache\n- C. Store artifacts only in a runtime volume\n\n<details>\n<summary>Answer & Explanation</summary>\n\n**Answer: A.** Layers are invalidated by changed inputs and preceding layers. Put slower, less frequently changing work first.\n\n</details>\n\n### Q2. A container is removed and its output was written only to its writable layer. What should retain it across replacements?\n\n- A. A new image label\n- B. A persistent volume or supported external storage\n- C. A larger memory limit\n\n<details>\n<summary>Answer & Explanation</summary>\n\n**Answer: B.** The writable container layer has the container's lifecycle. Use an explicitly persistent storage mechanism.\n\n</details>",
+    "references": "- [Docker: multi-stage builds](https://docs.docker.com/build/building/multi-stage/) — Separate build tools from runtime artifacts.\n- [Docker: storage volumes](https://docs.docker.com/engine/storage/volumes/) — Review retention, mount behavior, and backup guidance.\n- [Docker Compose documentation](https://docs.docker.com/compose/) — Read service networking, dependencies, and health checks."
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "id": "M11",
+    "phaseId": "phase-3",
+    "title": "Context Engineering, Agentic RAG & Memory",
+    "topics": "Semantic chunking, hybrid retrieval (dense + BM25), cross-encoder reranking, Agentic RAG routing/grading, KV/prompt caching, multi-tier agent memory",
+    "model": "GPT-6.2 Astra (High)",
+    "targetHours": 14
+  },
+  "fullLesson": false,
+  "sections": {
+    "mental-model": "",
+    "architecture": "",
+    "syntax": "",
+    "lab": "",
+    "debugging": "",
+    "projects": "### Project 1: Standards Citation Assistant\n\n**Domain:** Engineering compliance\n\nFind and cite source clauses in technical standards.\n\n#### Build Milestones\n\n1. Design chunks with stable citations and compare lexical and dense retrieval.\n2. Evaluate exact identifiers, paraphrases, and cases where the corpus has no answer.\n\n### Project 2: Retail Returns Knowledge Router\n\n**Domain:** Retail\n\nChoose whether a return request needs policy documents or a status tool.\n\n#### Build Milestones\n\n1. Define request routing, context budgets, and retrieval quality checks.\n2. Confirm out-of-scope cases abstain and quoted policies trace to their sources.\n\n### Project 3: Learning Support Memory Service\n\n**Domain:** Education\n\nRetain useful study preferences with controllable retention.\n\n#### Build Milestones\n\n1. Separate session state from long-term preferences and define user-scoped updates and retrieval.\n2. Verify retrieval isolation and that a deletion request removes remembered data.",
+    "quiz": "### Q1. Dense retrieval misses a rare identifier while lexical retrieval misses paraphrases. Which design covers both?\n\n- A. Remove lexical search\n- B. Use only a prompt cache\n- C. Combine dense and lexical candidates before reranking\n\n<details>\n<summary>Answer & Explanation</summary>\n\n**Answer: C.** Hybrid retrieval brings complementary candidates together. Measure the combined recall and reranker precision.\n\n</details>\n\n### Q2. An agent surfaces an old preference after the user corrects it. What memory property is missing?\n\n- A. Versioned updates or supersession with retrieval rules\n- B. A bigger model alone\n- C. An indefinite cache lifetime\n\n<details>\n<summary>Answer & Explanation</summary>\n\n**Answer: A.** Memory needs explicit lifecycle and provenance so stale records cannot silently override current preferences.\n\n</details>",
+    "references": "- [PostgreSQL: full-text search](https://www.postgresql.org/docs/current/textsearch.html) — Review parsing, ranking, and index-backed text matching.\n- [Sentence Transformers: semantic search](https://www.sbert.net/examples/sentence_transformer/applications/semantic-search/README.html) — Compare asymmetric query/document search and evaluation.\n- [OpenAI: prompt caching](https://platform.openai.com/docs/guides/prompt-caching) — Read prefix stability and cache-aware context organization."
+  }
+}

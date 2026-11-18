@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "id": "M05",
+    "phaseId": "phase-1",
+    "title": "NoSQL Document DBs (MongoDB)",
+    "topics": "BSON modeling, embedding vs. referencing, Aggregation Pipelines, TTL/compound indexes, PyMongo AsyncMongoClient, Beanie ODM, agent trajectories",
+    "model": "GPT-6.2 Sol (Medium)",
+    "targetHours": 10
+  },
+  "fullLesson": false,
+  "sections": {
+    "mental-model": "",
+    "architecture": "",
+    "syntax": "",
+    "lab": "",
+    "debugging": "",
+    "projects": "### Project 1: Museum Conservation Records\n\n**Domain:** Museums\n\nCapture flexible assessment fields per collection type.\n\n#### Build Milestones\n\n1. Choose document boundaries and schema rules for assessments and their small, bounded observations.\n2. Verify a new assessment type and reject an invalid date.\n\n### Project 2: Media Playback Sessions\n\n**Domain:** Streaming media\n\nStore time-limited viewer sessions with varied event metadata.\n\n#### Build Milestones\n\n1. Separate growing event streams from session summaries and design expiry and lookup indexes.\n2. Demonstrate bounded document size and measured cleanup with test data.\n\n### Project 3: Service Case Timeline\n\n**Domain:** Utilities\n\nKeep reviewer-visible histories of automated case updates.\n\n#### Build Milestones\n\n1. Build async reads and an aggregation that groups outcomes by case and time window.\n2. Verify deterministic ordering, validation failures, and query plans for common time ranges.",
+    "quiz": "### Q1. An event array grows indefinitely inside one account document. What is the better model?\n\n- A. Separate event documents linked to the account\n- B. One larger account document for all users\n- C. A TTL index on the array length\n\n<details>\n<summary>Answer & Explanation</summary>\n\n**Answer: A.** Unbounded arrays create growth, contention, and document-size problems. Keep bounded summaries when helpful.\n\n</details>\n\n### Q2. A TTL-indexed session expires at noon. Can the application assume deletion occurs at precisely noon?\n\n- A. Yes, TTL locks the document at noon\n- B. No, TTL cleanup runs asynchronously\n- C. Only if the field is a string\n\n<details>\n<summary>Answer & Explanation</summary>\n\n**Answer: B.** Use the expiry timestamp to enforce validity. Background deletion may lag.\n\n</details>",
+    "references": "- [MongoDB: data modeling](https://www.mongodb.com/docs/manual/data-modeling/) — Choose embedding or references based on access patterns and document growth.\n- [MongoDB: aggregation pipelines](https://www.mongodb.com/docs/manual/core/aggregation-pipeline/) — Read filtering, grouping, and pipeline stage behavior.\n- [PyMongo driver documentation](https://www.mongodb.com/docs/languages/python/pymongo-driver/current/) — Locate the asynchronous client and CRUD examples."
+  }
+}

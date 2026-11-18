@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "id": "M09",
+    "phaseId": "phase-2",
+    "title": "Observability (Prometheus, Grafana & OTel)",
+    "topics": "Metrics/logs/traces, Prometheus pull scraping & exporters, PromQL (rate, histogram_quantile), alert rules, Grafana dashboards, OTel Collector pipelines",
+    "model": "GPT-6.2 Sol (Medium)",
+    "targetHours": 10
+  },
+  "fullLesson": false,
+  "sections": {
+    "mental-model": "",
+    "architecture": "",
+    "syntax": "",
+    "lab": "",
+    "debugging": "",
+    "projects": "### Project 1: Parcel Sorter Latency Dashboard\n\n**Domain:** Logistics\n\nShow rate, errors, and wait time by service stage.\n\n#### Build Milestones\n\n1. Choose bounded metric labels and histogram buckets around operational latency objectives.\n2. Replay controlled traffic and explain how the percentiles respond.\n\n### Project 2: School Meals Alerting\n\n**Domain:** Public services\n\nPage on sustained order-processing failures.\n\n#### Build Milestones\n\n1. Design a burn-rate or sustained-availability rule and distinguish empty traffic from a healthy interval.\n2. Test brief spikes, no traffic, and a persistent error with a runbook.\n\n### Project 3: Media Encoding Trace Pipeline\n\n**Domain:** Media\n\nTrace a video through upload, queue, and encoding.\n\n#### Build Milestones\n\n1. Propagate context across worker boundaries and define collector sampling and export.\n2. Trace a synthetic failure and confirm service names and latency attribution.",
+    "quiz": "### Q1. What should you aggregate before calculating a single p95 across replicas with compatible Prometheus histograms?\n\n- A. The rates of bucket counts grouped by the bucket boundary\n- B. The already-computed p95 values\n- C. Only the highest observed sample\n\n<details>\n<summary>Answer & Explanation</summary>\n\n**Answer: A.** Aggregate bucket rates while retaining le, then calculate the quantile from the combined distribution.\n\n</details>\n\n### Q2. Which signal is best for reconstructing one request across three services?\n\n- A. A global request counter\n- B. A per-host CPU gauge\n- C. A distributed trace with propagated context\n\n<details>\n<summary>Answer & Explanation</summary>\n\n**Answer: C.** Parent and child spans capture causal relationships and timings across services.\n\n</details>",
+    "references": "- [Prometheus: query functions](https://prometheus.io/docs/prometheus/latest/querying/functions/) — Read rate, histogram_quantile, and aggregation examples.\n- [Grafana: dashboard best practices](https://grafana.com/docs/grafana/latest/dashboards/build-dashboards/best-practices/) — Focus on panels that support concrete operational questions.\n- [OpenTelemetry Collector configuration](https://opentelemetry.io/docs/collector/configuration/) — Trace receivers, processors, exporters, and service pipelines."
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "id": "M10",
+    "phaseId": "phase-3",
+    "title": "Practical ML/DL & Hugging Face Brush-Up",
+    "topics": "Tensors, embeddings, tokenization, encoder/decoder Transformers, LoRA/QLoRA, quantization (GGUF/AWQ), huggingface_hub, transformers, sentence-transformers",
+    "model": "GPT-6.2 Sol (Medium)",
+    "targetHours": 8
+  },
+  "fullLesson": false,
+  "sections": {
+    "mental-model": "",
+    "architecture": "",
+    "syntax": "",
+    "lab": "",
+    "debugging": "",
+    "projects": "### Project 1: Warranty Text Classifier\n\n**Domain:** Consumer electronics\n\nTriage warranty requests with a practical pretrained model.\n\n#### Build Milestones\n\n1. Select a model and tokenizer, define representative examples, and compare predictions and confidence.\n2. Measure accuracy and latency on a held-out sample, including ambiguous text.\n\n### Project 2: Museum Collection Similarity\n\n**Domain:** Cultural heritage\n\nFind catalog items similar to a short description.\n\n#### Build Milestones\n\n1. Use a sentence encoder with a consistent input and similarity convention.\n2. Verify paraphrases retrieve intended items better than unrelated examples.\n\n### Project 3: Offline Field Notes Assistant\n\n**Domain:** Conservation\n\nRun a small local inference model under a memory budget.\n\n#### Build Milestones\n\n1. Compare a baseline checkpoint with a supported quantized variant and record resource use.\n2. Measure memory, latency, and quality on a small fixed set of prompts.",
+    "quiz": "### Q1. A sequence classifier receives IDs from a tokenizer trained for another checkpoint. What is the risk?\n\n- A. The IDs may map to different tokens and break the model's input semantics\n- B. Inference always becomes training\n- C. The output automatically normalizes the vocabulary\n\n<details>\n<summary>Answer & Explanation</summary>\n\n**Answer: A.** Keep tokenizer assets, model configuration, and checkpoint version aligned.\n\n</details>\n\n### Q2. Which choice is most directly aimed at reducing memory used by model weights at inference?\n\n- A. More output tokens\n- B. A longer training corpus\n- C. A supported lower-precision quantized checkpoint\n\n<details>\n<summary>Answer & Explanation</summary>\n\n**Answer: C.** Quantization reduces weight representation size. Verify runtime support and measure the quality-latency trade-off.\n\n</details>",
+    "references": "- [Hugging Face Transformers: quick tour](https://huggingface.co/docs/transformers/quicktour) — Use a pretrained checkpoint and its tokenizer for a small inference task.\n- [Hugging Face Hub: download files](https://huggingface.co/docs/huggingface_hub/guides/download) — Pin an artifact revision and understand the local cache.\n- [Hugging Face Datasets: quickstart](https://huggingface.co/docs/datasets/quickstart) — Load an evaluation split and inspect representative records."
+  }
+}

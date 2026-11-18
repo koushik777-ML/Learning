@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "id": "M13",
+    "phaseId": "phase-3",
+    "title": "Agent Harness, Guardrails & Sandboxing",
+    "topics": "Deterministic state machines vs. agent loops, context compaction & token budgets, Sandboxed Code Execution (Docker/microVMs), I/O guardrails, prompt injection defense, HITL",
+    "model": "GPT-6.2 Astra (High)",
+    "targetHours": 14
+  },
+  "fullLesson": false,
+  "sections": {
+    "mental-model": "",
+    "architecture": "",
+    "syntax": "",
+    "lab": "",
+    "debugging": "",
+    "projects": "### Project 1: Isolated Spreadsheet Formula Lab\n\n**Domain:** Accounting education\n\nEvaluate generated examples inside a restricted environment.\n\n#### Build Milestones\n\n1. Design strict input shapes, filesystem isolation, and execution budgets.\n2. Verify the worker cannot reach host files or the network, and stops on time.\n\n### Project 2: Editorial Screening Queue\n\n**Domain:** Publishing\n\nSend sensitive or uncertain recommendations to a reviewer.\n\n#### Build Milestones\n\n1. Define input handling and an explicit approval transition before any publish action.\n2. Verify untrusted document text cannot change workflow permissions.\n\n### Project 3: Research Summary Budget Manager\n\n**Domain:** Research administration\n\nSummarize large internal reports within a predictable budget.\n\n#### Build Milestones\n\n1. Define state checkpoints, compaction rules, and bounded model routing.\n2. Verify interrupted jobs resume and terminate at the configured work limit.",
+    "quiz": "### Q1. Retrieved text instructs an agent to use a privileged tool. How should the harness interpret it?\n\n- A. As a trusted system instruction\n- B. As untrusted data subject to policy enforcement\n- C. As approval granted by the document author\n\n<details>\n<summary>Answer & Explanation</summary>\n\n**Answer: B.** Keep instruction authority separate from retrieved content. Enforce permissions outside model output.\n\n</details>\n\n### Q2. A sandbox runs with no network access but unlimited CPU and memory. Which essential isolation controls are missing?\n\n- A. Additional tool descriptions\n- B. A longer context window\n- C. Resource limits and deadlines\n\n<details>\n<summary>Answer & Explanation</summary>\n\n**Answer: C.** Control compute, memory, lifecycle, and output as well as filesystem and networking.\n\n</details>",
+    "references": "- [Docker: runtime resource constraints](https://docs.docker.com/engine/containers/resource_constraints/) — Read CPU and memory limits and their failure modes.\n- [OWASP: prompt injection prevention](https://cheatsheetseries.owasp.org/cheatsheets/LLM_Prompt_Injection_Prevention_Cheat_Sheet.html) — Focus on least privilege, validating tool calls, and human approval.\n- [LangGraph: interrupts](https://docs.langchain.com/oss/python/langgraph/interrupts) — Study checkpointed human approval and resume behavior."
+  }
+}

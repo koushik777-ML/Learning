@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "id": "M08",
+    "phaseId": "phase-2",
+    "title": "Kubernetes (K8s) Fundamentals & Ops",
+    "topics": "Control Plane & Nodes, Pods, Deployments, Services, ConfigMaps/Secrets, Ingress, resource limits, health probes, HPA autoscaling, kubectl debugging",
+    "model": "GPT-6.2 Astra (High)",
+    "targetHours": 14
+  },
+  "fullLesson": false,
+  "sections": {
+    "mental-model": "",
+    "architecture": "",
+    "syntax": "",
+    "lab": "",
+    "debugging": "",
+    "projects": "### Project 1: Campus Dining API Rollout\n\n**Domain:** Education\n\nRelease a small menu service without routing traffic to unhealthy pods.\n\n#### Build Milestones\n\n1. Define Deployment, Service, readiness, and rollout criteria.\n2. Demonstrate a bad revision does not receive traffic during rollout.\n\n### Project 2: Catalog Thumbnail Autoscaler\n\n**Domain:** E-commerce\n\nScale thumbnail processing under changing load.\n\n#### Build Milestones\n\n1. Measure resource requests and design scaling policies with sensible stabilization.\n2. Run a repeatable load scenario and record scale-up and scale-down behavior.\n\n### Project 3: Regional Weather Gateway\n\n**Domain:** Public safety\n\nOperate a gateway with clear configuration and incident diagnostics.\n\n#### Build Milestones\n\n1. Separate configurations from sensitive values and document resource, probe, and routing policies.\n2. Reproduce a startup failure and diagnose it using events, logs, and endpoint state.",
+    "quiz": "### Q1. A pod should stay alive during warm-up but receive no requests. Which outcome should express that?\n\n- A. Fail liveness continually\n- B. Report not ready until warm-up completes\n- C. Remove resource requests\n\n<details>\n<summary>Answer & Explanation</summary>\n\n**Answer: B.** Readiness controls endpoint inclusion. A startup probe can delay liveness checks if initialization is slow.\n\n</details>\n\n### Q2. A Service has no endpoints although pods are running and ready. What should you verify first?\n\n- A. The namespace and Service selector against pod labels\n- B. Whether the Containerfile was committed\n- C. The Grafana color palette\n\n<details>\n<summary>Answer & Explanation</summary>\n\n**Answer: A.** A Service selector must match pods in its namespace. Inspect EndpointSlices to confirm the result.\n\n</details>",
+    "references": "- [Kubernetes: cluster architecture](https://kubernetes.io/docs/concepts/architecture/) — Trace the control plane, nodes, and reconciliation components.\n- [Kubernetes: probes](https://kubernetes.io/docs/concepts/configuration/liveness-readiness-startup-probes/) — Compare readiness, liveness, and startup probe effects.\n- [Kubernetes: horizontal autoscaling](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/) — Read metrics, requests, and stabilization behavior."
+  }
+}

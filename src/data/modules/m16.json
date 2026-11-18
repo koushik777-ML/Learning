@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "id": "M16",
+    "phaseId": "phase-3",
+    "title": "End-to-End Production Capstone Project",
+    "topics": "Full production multi-agent platform (FastAPI, PostgreSQL/pgvector, MongoDB, Redis, MCP, A2A, Docker, K8s, Prometheus, Grafana, OTel) — monorepo build & verification",
+    "model": "GPT-6.2 Astra (Extra High)",
+    "targetHours": 25
+  },
+  "fullLesson": false,
+  "sections": {
+    "mental-model": "",
+    "architecture": "",
+    "syntax": "",
+    "lab": "",
+    "debugging": "",
+    "projects": "### Project 1: Knowledge Intake and Retrieval Platform\n\n**Domain:** Public research\n\nDeploy a full-stack search platform for research submissions.\n\n#### Build Milestones\n\n1. Define the monorepo, data services, retrieval pipeline, and typed tool boundary.\n2. Evaluate retrieval, persistence, deployment readiness, and traceability end to end.\n\n### Project 2: Service Coordination Platform\n\n**Domain:** Facilities management\n\nCoordinate independently deployable agents for maintenance requests.\n\n#### Build Milestones\n\n1. Design MCP tools, A2A delegation, resumable queues, and approval for external effects.\n2. Exercise failure recovery, task isolation, telemetry, and a safe rollout using synthetic requests.\n\n### Project 3: Compliance Evidence Platform\n\n**Domain:** Financial audit\n\nBuild a production-grade platform for evidence collection and review.\n\n#### Build Milestones\n\n1. Define data retention, security boundaries, evaluation gates, and operational dashboards.\n2. Prove isolation, provenance, recovery, and performance against a recorded acceptance plan.",
+    "quiz": "### Q1. A worker completes an external action but is terminated before updating its task record. What architecture minimizes duplicate effects?\n\n- A. A larger model context\n- B. Idempotency keys and persistent checkpoints with reconciliation\n- C. Removing task states\n\n<details>\n<summary>Answer & Explanation</summary>\n\n**Answer: B.** A recoverable workflow needs durable coordination between the effect and its recorded state.\n\n</details>\n\n### Q2. Which evidence best supports a production readiness claim for the capstone?\n\n- A. Passing end-to-end, failure-recovery, security, and evaluation checks linked to telemetry\n- B. A diagram and one successful demonstration\n- C. A large number of containers\n\n<details>\n<summary>Answer & Explanation</summary>\n\n**Answer: A.** Readiness includes behavior under failure, protection boundaries, operational visibility, and repeatable validation.\n\n</details>",
+    "references": "- [FastAPI: deployment concepts](https://fastapi.tiangolo.com/deployment/concepts/) — Plan workers, restarts, replication, and startup steps.\n- [Kubernetes: Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/) — Review rollout strategy, readiness, and rollback.\n- [OpenTelemetry: observability primer](https://opentelemetry.io/docs/concepts/observability-primer/) — Connect telemetry to service-level behavior and incident diagnosis."
+  }
+}

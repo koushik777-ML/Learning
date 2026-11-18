@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "id": "M15",
+    "phaseId": "phase-3",
+    "title": "Agent Evals, Remote Deployment & Ops",
+    "topics": "Evaluation-Driven Development (EDD), tool unit tests, trajectory evals, LLM-as-a-Judge CI gates, async K8s queue workers, OTel GenAI spans, token burn monitoring",
+    "model": "GPT-6.2 Astra (High)",
+    "targetHours": 12
+  },
+  "fullLesson": false,
+  "sections": {
+    "mental-model": "",
+    "architecture": "",
+    "syntax": "",
+    "lab": "",
+    "debugging": "",
+    "projects": "### Project 1: Travel Policy Evaluation Suite\n\n**Domain:** Travel operations\n\nCatch retrieval and tool regressions before rollout.\n\n#### Build Milestones\n\n1. Build a small golden dataset with step-level expectations and calibrated review criteria.\n2. Show a seeded regression fails CI and a corrected change passes.\n\n### Project 2: Claims Review Worker\n\n**Domain:** Insurance\n\nDeploy queue-backed, resumable processing for long-running reviews.\n\n#### Build Milestones\n\n1. Define queue ownership, coordination keys, checkpointing, and graceful termination.\n2. Terminate a worker mid-case and verify recovery without duplicate decisions.\n\n### Project 3: Language Tutor Cost Monitor\n\n**Domain:** Education\n\nDetect excessive token use and repeated loops.\n\n#### Build Milestones\n\n1. Choose trace fields, cost and latency metrics, and alerts for abnormal loops.\n2. Replay a long synthetic interaction and verify the alert and trace point to its cause.",
+    "quiz": "### Q1. A final answer looks correct but the agent made an inappropriate tool call beforehand. What evaluation catches that?\n\n- A. A token count alone\n- B. Only a final-answer judge\n- C. Step-level trajectory and tool-policy assertions\n\n<details>\n<summary>Answer & Explanation</summary>\n\n**Answer: C.** The final text can hide unsafe or wasteful intermediate behavior. Evaluate the actions as well as the answer.\n\n</details>\n\n### Q2. A queue redelivers a job after a worker exits before acknowledging it. What should the new worker do?\n\n- A. Resume or reconcile using persisted state and an idempotent operation key\n- B. Assume all earlier steps failed\n- C. Disable retries globally\n\n<details>\n<summary>Answer & Explanation</summary>\n\n**Answer: A.** Redelivery is normal for at-least-once processing. Persist state and make external effects safe to replay.\n\n</details>",
+    "references": "- [OpenAI: evaluation best practices](https://platform.openai.com/docs/guides/evaluation-best-practices) — Read task-specific test data and automated evaluation design.\n- [Kubernetes: Jobs](https://kubernetes.io/docs/concepts/workloads/controllers/job/) — Study retries and workload termination behavior.\n- [OpenTelemetry: GenAI conventions](https://opentelemetry.io/docs/specs/semconv/gen-ai/) — Review spans, token usage, and telemetry conventions."
+  }
+}

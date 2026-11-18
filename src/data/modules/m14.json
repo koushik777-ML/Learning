@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "id": "M14",
+    "phaseId": "phase-3",
+    "title": "Structured Function Calling & Multi-Agent (A2A)",
+    "topics": "Hermes tool-calling models, grammar-constrained JSON Schema outputs, Supervisor/Hierarchical/Swarm topologies, Agent-to-Agent (A2A) Protocol & Agent Cards",
+    "model": "GPT-6.2 Astra (High)",
+    "targetHours": 12
+  },
+  "fullLesson": false,
+  "sections": {
+    "mental-model": "",
+    "architecture": "",
+    "syntax": "",
+    "lab": "",
+    "debugging": "",
+    "projects": "### Project 1: Ticket Classification Router\n\n**Domain:** Customer support\n\nRoute tickets using a typed, auditable classification.\n\n#### Build Milestones\n\n1. Design an output schema and enforce semantic limits after constrained decoding.\n2. Check invalid categories, ambiguities, and consistent routing.\n\n### Project 2: Food Recall Coordination\n\n**Domain:** Food safety\n\nDelegate independent evidence gathering to specialist agents.\n\n#### Build Milestones\n\n1. Define a supervisor contract, evidence format, and escalation deadline.\n2. Test partial responses and prevent low-confidence findings from closing a case.\n\n### Project 3: Media Licensing Task Exchange\n\n**Domain:** Media licensing\n\nExchange asynchronous work with independently hosted teams.\n\n#### Build Milestones\n\n1. Specify Agent Card capabilities, task states, trust boundaries, and cancellation semantics.\n2. Verify service discovery, a complete asynchronous task, and cancellation.",
+    "quiz": "### Q1. A function call passes grammar-constrained JSON Schema. Which check is still required?\n\n- A. Whether execution is authorized and the requested business state change is valid\n- B. Whether JSON uses characters\n- C. Whether the response had a prompt\n\n<details>\n<summary>Answer & Explanation</summary>\n\n**Answer: A.** Structured decoding constrains form. The service must check permissions and meaning before acting.\n\n</details>\n\n### Q2. What should a client inspect when discovering an A2A server's supported skills and endpoints?\n\n- A. The model's embedding weights\n- B. The Agent Card\n- C. A deployment's CPU request\n\n<details>\n<summary>Answer & Explanation</summary>\n\n**Answer: B.** The Agent Card describes identity, capabilities, and connectivity so clients can choose an appropriate agent.\n\n</details>",
+    "references": "- [A2A protocol specification](https://a2a-protocol.org/latest/specification/) — Read Agent Cards, tasks, and asynchronous lifecycle semantics.\n- [JSON Schema: object reference](https://json-schema.org/understanding-json-schema/reference/object) — Review required properties and additionalProperties.\n- [Hermes Function Calling](https://github.com/NousResearch/Hermes-Function-Calling) — Study the model's function signature and argument format."
+  }
+}

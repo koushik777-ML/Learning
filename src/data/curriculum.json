@@ -1,0 +1,150 @@
+{
+  "phases": [
+    {
+      "id": "phase-1",
+      "label": "Phase 1",
+      "title": "Infra & Data"
+    },
+    {
+      "id": "phase-2",
+      "label": "Phase 2",
+      "title": "Containers & Ops"
+    },
+    {
+      "id": "phase-3",
+      "label": "Phase 3",
+      "title": "AI & Agentic Systems"
+    }
+  ],
+  "modules": [
+    {
+      "id": "M01",
+      "phaseId": "phase-1",
+      "title": "Linux Essentials",
+      "topics": "Filesystem hierarchy, chmod/chown/ACLs, process signals, ss/curl/dig, systemd, SSH hardening, Bash scripting",
+      "model": "GPT-6.2 Sol (Medium)",
+      "targetHours": 8
+    },
+    {
+      "id": "M02",
+      "phaseId": "phase-1",
+      "title": "Git & Collaborative Workflows",
+      "topics": "Git object internals, trunk-based vs. GitFlow, merge vs. interactive rebase, conflict resolution, PR standards, GitHub Actions CI",
+      "model": "GPT-6.2 Sol (Medium)",
+      "targetHours": 6
+    },
+    {
+      "id": "M03",
+      "phaseId": "phase-1",
+      "title": "Production Python Backend Engineering",
+      "topics": "uv, pydantic-settings, async/await, FastAPI DI & lifespan, REST/SSE/WebSockets, structlog JSON logging, OpenTelemetry tracing, RFC 7807",
+      "model": "GPT-6.2 Sol (Medium)",
+      "targetHours": 12
+    },
+    {
+      "id": "M04",
+      "phaseId": "phase-1",
+      "title": "Relational & Vector DBs (PostgreSQL)",
+      "topics": "Relational modeling, ACID & isolation levels, B-Tree/GIN/HNSW indexes, EXPLAIN ANALYZE, psycopg v3 & SQLAlchemy 2.0, Alembic, JSONB, pgvector RAG",
+      "model": "GPT-6.2 Sol (Medium)",
+      "targetHours": 12
+    },
+    {
+      "id": "M05",
+      "phaseId": "phase-1",
+      "title": "NoSQL Document DBs (MongoDB)",
+      "topics": "BSON modeling, embedding vs. referencing, Aggregation Pipelines, TTL/compound indexes, PyMongo AsyncMongoClient, Beanie ODM, agent trajectories",
+      "model": "GPT-6.2 Sol (Medium)",
+      "targetHours": 10
+    },
+    {
+      "id": "M06",
+      "phaseId": "phase-1",
+      "title": "System Design & Resilient APIs",
+      "topics": "Horizontal scaling, Redis caching & invalidation, rate limiting, idempotency keys, httpx retries/circuit breakers, cursor pagination, HMAC webhooks, ARQ/Celery",
+      "model": "GPT-6.2 Astra (High)",
+      "targetHours": 14
+    },
+    {
+      "id": "M07",
+      "phaseId": "phase-2",
+      "title": "Docker & Containerization",
+      "topics": "Linux namespaces & cgroups, image layers & caching, non-root security hardening, multi-stage Python Dockerfiles, volumes, bridge networking, docker-compose",
+      "model": "GPT-6.2 Sol (Medium)",
+      "targetHours": 8
+    },
+    {
+      "id": "M08",
+      "phaseId": "phase-2",
+      "title": "Kubernetes (K8s) Fundamentals & Ops",
+      "topics": "Control Plane & Nodes, Pods, Deployments, Services, ConfigMaps/Secrets, Ingress, resource limits, health probes, HPA autoscaling, kubectl debugging",
+      "model": "GPT-6.2 Astra (High)",
+      "targetHours": 14
+    },
+    {
+      "id": "M09",
+      "phaseId": "phase-2",
+      "title": "Observability (Prometheus, Grafana & OTel)",
+      "topics": "Metrics/logs/traces, Prometheus pull scraping & exporters, PromQL (rate, histogram_quantile), alert rules, Grafana dashboards, OTel Collector pipelines",
+      "model": "GPT-6.2 Sol (Medium)",
+      "targetHours": 10
+    },
+    {
+      "id": "M10",
+      "phaseId": "phase-3",
+      "title": "Practical ML/DL & Hugging Face Brush-Up",
+      "topics": "Tensors, embeddings, tokenization, encoder/decoder Transformers, LoRA/QLoRA, quantization (GGUF/AWQ), huggingface_hub, transformers, sentence-transformers",
+      "model": "GPT-6.2 Sol (Medium)",
+      "targetHours": 8
+    },
+    {
+      "id": "M11",
+      "phaseId": "phase-3",
+      "title": "Context Engineering, Agentic RAG & Memory",
+      "topics": "Semantic chunking, hybrid retrieval (dense + BM25), cross-encoder reranking, Agentic RAG routing/grading, KV/prompt caching, multi-tier agent memory",
+      "model": "GPT-6.2 Astra (High)",
+      "targetHours": 14
+    },
+    {
+      "id": "M12",
+      "phaseId": "phase-3",
+      "title": "Agentic Architectures, Tool Calling & MCP",
+      "topics": "ReAct, Plan-and-Execute, Reflection loops, native tool calling, Model Context Protocol (MCP) Servers/Clients (stdio & HTTP), LangGraph vs. OpenAI SDK vs. PydanticAI",
+      "model": "GPT-6.2 Astra (High)",
+      "targetHours": 14
+    },
+    {
+      "id": "M13",
+      "phaseId": "phase-3",
+      "title": "Agent Harness, Guardrails & Sandboxing",
+      "topics": "Deterministic state machines vs. agent loops, context compaction & token budgets, Sandboxed Code Execution (Docker/microVMs), I/O guardrails, prompt injection defense, HITL",
+      "model": "GPT-6.2 Astra (High)",
+      "targetHours": 14
+    },
+    {
+      "id": "M14",
+      "phaseId": "phase-3",
+      "title": "Structured Function Calling & Multi-Agent (A2A)",
+      "topics": "Hermes tool-calling models, grammar-constrained JSON Schema outputs, Supervisor/Hierarchical/Swarm topologies, Agent-to-Agent (A2A) Protocol & Agent Cards",
+      "model": "GPT-6.2 Astra (High)",
+      "targetHours": 12
+    },
+    {
+      "id": "M15",
+      "phaseId": "phase-3",
+      "title": "Agent Evals, Remote Deployment & Ops",
+      "topics": "Evaluation-Driven Development (EDD), tool unit tests, trajectory evals, LLM-as-a-Judge CI gates, async K8s queue workers, OTel GenAI spans, token burn monitoring",
+      "model": "GPT-6.2 Astra (High)",
+      "targetHours": 12
+    },
+    {
+      "id": "M16",
+      "phaseId": "phase-3",
+      "title": "End-to-End Production Capstone Project",
+      "topics": "Full production multi-agent platform (FastAPI, PostgreSQL/pgvector, MongoDB, Redis, MCP, A2A, Docker, K8s, Prometheus, Grafana, OTel) — monorepo build & verification",
+      "model": "GPT-6.2 Astra (Extra High)",
+      "targetHours": 25
+    }
+  ],
+  "targetHours": 193
+}

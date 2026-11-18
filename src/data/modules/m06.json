@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "id": "M06",
+    "phaseId": "phase-1",
+    "title": "System Design & Resilient APIs",
+    "topics": "Horizontal scaling, Redis caching & invalidation, rate limiting, idempotency keys, httpx retries/circuit breakers, cursor pagination, HMAC webhooks, ARQ/Celery",
+    "model": "GPT-6.2 Astra (High)",
+    "targetHours": 14
+  },
+  "fullLesson": false,
+  "sections": {
+    "mental-model": "",
+    "architecture": "",
+    "syntax": "",
+    "lab": "",
+    "debugging": "",
+    "projects": "### Project 1: Transit Arrival Cache\n\n**Domain:** Public transit\n\nReduce external API load while keeping arrivals useful.\n\n#### Build Milestones\n\n1. Design cache keys, expiry rules, a stale fallback, and bounded upstream retries.\n2. Use simulated delays and compare response time and miss rates.\n\n### Project 2: Donation Receipt Queue\n\n**Domain:** Nonprofits\n\nIssue receipts once when submissions are retried.\n\n#### Build Milestones\n\n1. Define idempotency scope, job ownership, retry policy, and receipt persistence.\n2. Replay the same submission and verify exactly one recorded receipt.\n\n### Project 3: Supplier Delivery Webhooks\n\n**Domain:** Retail distribution\n\nReceive and process authenticated delivery events.\n\n#### Build Milestones\n\n1. Plan signature checks on the raw body, replay control, and cursor-based event history.\n2. Verify modified events are rejected and duplicate events cause no repeated work.",
+    "quiz": "### Q1. A client retries a payment request after a timeout. Which mechanism can prevent two charges?\n\n- A. Offset pagination\n- B. A unique idempotency key tied atomically to the operation\n- C. A larger connection pool\n\n<details>\n<summary>Answer & Explanation</summary>\n\n**Answer: B.** Store the operation outcome under the key and define behavior for duplicates and conflicting payloads.\n\n</details>\n\n### Q2. All clients retry an overloaded upstream after the same fixed delay. What reduces synchronized load?\n\n- A. Remove all timeouts\n- B. Retry all response codes forever\n- C. Bound retries and add jitter to backoff\n\n<details>\n<summary>Answer & Explanation</summary>\n\n**Answer: C.** Jitter spreads attempts, while deadline and retry budgets limit additional pressure.\n\n</details>",
+    "references": "- [Redis documentation](https://redis.io/docs/latest/develop/) — Review expiration, atomic operations, and Streams consumer behavior.\n- [HTTPX: timeouts](https://www.python-httpx.org/advanced/timeouts/) — Distinguish connect, read, write, and pool timeouts.\n- [Tenacity documentation](https://tenacity.readthedocs.io/en/latest/) — Read stop policies, wait policies, jitter, and coroutine retries."
+  }
+}

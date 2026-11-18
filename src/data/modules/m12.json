@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "id": "M12",
+    "phaseId": "phase-3",
+    "title": "Agentic Architectures, Tool Calling & MCP",
+    "topics": "ReAct, Plan-and-Execute, Reflection loops, native tool calling, Model Context Protocol (MCP) Servers/Clients (stdio & HTTP), LangGraph vs. OpenAI SDK vs. PydanticAI",
+    "model": "GPT-6.2 Astra (High)",
+    "targetHours": 14
+  },
+  "fullLesson": false,
+  "sections": {
+    "mental-model": "",
+    "architecture": "",
+    "syntax": "",
+    "lab": "",
+    "debugging": "",
+    "projects": "### Project 1: Exhibit Information Tools\n\n**Domain:** Museums\n\nExpose curated exhibit facts through typed MCP tools.\n\n#### Build Milestones\n\n1. Define resource and tool boundaries, schemas, transport, and failure responses.\n2. Verify clients can discover valid tools and reject invalid arguments.\n\n### Project 2: Fleet Maintenance Planner\n\n**Domain:** Transportation\n\nBuild reviewable plans from maintenance and parts data.\n\n#### Build Milestones\n\n1. Separate planning from tool execution and define stop conditions and reporting.\n2. Test unavailable inventory, competing maintenance windows, and a valid finalized plan.\n\n### Project 3: Contract Metadata Review Agent\n\n**Domain:** Legal operations\n\nReview a document's metadata using a bounded workflow.\n\n#### Build Milestones\n\n1. Define explicit states, tool permissions, and evidence required for review.\n2. Verify the agent stops on missing evidence and requests human review when needed.",
+    "quiz": "### Q1. What establishes that a tool-call argument is actually valid and authorized?\n\n- A. Receiving valid JSON from the model alone\n- B. Application-side schema validation and authorization before executing\n- C. A large context window\n\n<details>\n<summary>Answer & Explanation</summary>\n\n**Answer: B.** A model output is a proposal. Validate schema, permission, and policy at the execution boundary.\n\n</details>\n\n### Q2. Which MCP concept exposes contextual data for clients to read without treating it as an action?\n\n- A. A resource\n- B. An execution transcript\n- C. A sampling temperature\n\n<details>\n<summary>Answer & Explanation</summary>\n\n**Answer: A.** Resources expose contextual data. Tools expose executable operations and prompts describe reusable interactions.\n\n</details>",
+    "references": "- [Model Context Protocol specification](https://modelcontextprotocol.io/specification/) — Compare client/server features, lifecycle, and transport selection.\n- [MCP Python SDK](https://github.com/modelcontextprotocol/python-sdk) — Read typed tool definitions and client session examples.\n- [OpenAI Agents SDK documentation](https://openai.github.io/openai-agents-python/) — Compare tool invocation, handoffs, and tracing primitives."
+  }
+}

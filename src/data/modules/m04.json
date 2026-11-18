@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "id": "M04",
+    "phaseId": "phase-1",
+    "title": "Relational & Vector DBs (PostgreSQL)",
+    "topics": "Relational modeling, ACID & isolation levels, B-Tree/GIN/HNSW indexes, EXPLAIN ANALYZE, psycopg v3 & SQLAlchemy 2.0, Alembic, JSONB, pgvector RAG",
+    "model": "GPT-6.2 Sol (Medium)",
+    "targetHours": 12
+  },
+  "fullLesson": false,
+  "sections": {
+    "mental-model": "",
+    "architecture": "",
+    "syntax": "",
+    "lab": "",
+    "debugging": "",
+    "projects": "### Project 1: Book Lending Ledger\n\n**Domain:** Libraries\n\nTrack checkouts that may be submitted concurrently.\n\n#### Build Milestones\n\n1. Design loan constraints and choose a transaction boundary for checkout and return.\n2. Verify concurrent requests cannot lend the same copy twice.\n\n### Project 2: Factory Inspection Search\n\n**Domain:** Manufacturing\n\nSearch inspection reports and flexible sensor metadata.\n\n#### Build Milestones\n\n1. Model typed inspection fields alongside variable attributes and measure plans for common filters.\n2. Compare execution plans and results before and after adding an appropriate index.\n\n### Project 3: Archive Similarity Explorer\n\n**Domain:** Historical research\n\nRetrieve passages from a digitized archive.\n\n#### Build Milestones\n\n1. Combine keyword matches and vector similarity with migration and embedding version policies.\n2. Measure recall against known matches and check an embedding migration on a copy.",
+    "quiz": "### Q1. Two transactions check the same inventory and then both reserve the last item. What should the design add?\n\n- A. A longer HTTP timeout\n- B. A database constraint or appropriate transaction-level concurrency control\n- C. A JSONB field for the item label\n\n<details>\n<summary>Answer & Explanation</summary>\n\n**Answer: B.** Put the invariant where concurrent writes can be coordinated. Test with competing transactions.\n\n</details>\n\n### Q2. HNSW retrieval under a selective tenant filter returns fewer rows than expected. What should you inspect?\n\n- A. Client serialization only\n- B. The operating system clock\n- C. The plan, candidate set, and filtering order\n\n<details>\n<summary>Answer & Explanation</summary>\n\n**Answer: C.** Approximate candidates can be filtered after the index scan. Compare with exact search and measure recall.\n\n</details>",
+    "references": "- [PostgreSQL: transaction isolation](https://www.postgresql.org/docs/current/transaction-iso.html) — Compare Read Committed, Repeatable Read, and Serializable outcomes.\n- [pgvector project documentation](https://github.com/pgvector/pgvector) — Read distance operators, index types, and filtered approximate search.\n- [SQLAlchemy: asyncio extension](https://docs.sqlalchemy.org/en/20/orm/extensions/asyncio.html) — Review session state and the guidance on concurrent tasks."
+  }
+}
